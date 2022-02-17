@@ -25,7 +25,6 @@ class GFAvatarImageView: UIImageView {
         clipsToBounds = true
         layer.masksToBounds = true
         image = placeholderImage
-        contentMode = .scaleAspectFill
         translatesAutoresizingMaskIntoConstraints = false
     }
 }
