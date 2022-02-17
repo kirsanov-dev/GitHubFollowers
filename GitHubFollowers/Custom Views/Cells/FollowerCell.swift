@@ -11,31 +11,28 @@ class FollowerCell: UICollectionViewCell {
     static let identifier = "FollowerCell"
     let avatarImageView = GFAvatarImageView(frame: .zero)
     let usernameLabel = GFTitleLabel(textAlignment: .center, fontSize: 16)
-    let padding: CGFloat = 8
-    let usernameTopPadding: CGFloat = 12
-    let usernameLabelHeight: CGFloat = 20
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupHierarchy()
-        setupLayout()
+        configure()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func set(follower: Follower) {
+    func set(follower: Follower) {
         usernameLabel.text = follower.login
     }
     
-    
-    private func setupHierarchy() {
+    private func configure() {
         addSubview(avatarImageView)
         addSubview(usernameLabel)
-    }
-    
-    private func setupLayout() {
+        
+        let padding: CGFloat = 8
+        let usernameTopPadding: CGFloat = 12
+        let usernameLabelHeight: CGFloat = 20
+        
         NSLayoutConstraint.activate([
             avatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: padding),
             avatarImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
