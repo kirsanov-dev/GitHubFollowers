@@ -31,8 +31,8 @@ class FollowerCell: UICollectionViewCell {
         addSubview(usernameLabel)
         
         let padding: CGFloat = 8
-        let usernameTopPadding: CGFloat = 12
-        let usernameLabelHeight: CGFloat = 20
+        let usernameTopPadding: CGFloat = 10
+        let usernameLabelHeight: CGFloat = 16
         
         NSLayoutConstraint.activate([
             avatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: padding),

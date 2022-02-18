@@ -53,7 +53,7 @@ class FollowerListVC: UIViewController {
             self.dismissLoadingView()
             switch result {
             case .success(let followers):
-                if followers.count < 100 {
+                if followers.count < NetworkManager.shared.followersPerLoad {
                     self.hasMoreFollowers = false
                 }
                 self.followers.append(contentsOf: followers)
