@@ -10,15 +10,24 @@ import UIKit
 class UserInfoVC: UIViewController {
     
     let headerView = UIView()
+    let middleView = UIView()
+    let bottomView = UIView()
     var username: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureViewController()
+        setupLayout()
+        getUserInfo()
+    }
+    
+    func configureViewController() {
         view.backgroundColor = .systemBackground
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissVC))
         navigationItem.rightBarButtonItem = doneButton
-        setupLayout()
-        
+    }
+    
+    func getUserInfo() {
         NetworkManager.shared.getUserInfo(for: username) { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -31,23 +40,37 @@ class UserInfoVC: UIViewController {
             }
         }
     }
-
+    
     @objc func dismissVC() {
         dismiss(animated: true)
     }
     
     func setupLayout() {
-        let headerViewHeight: CGFloat = 180
         
-        headerView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(headerView)
+        let heightOne: CGFloat = 180
+        let heightTwo: CGFloat = 140
+        let padding: CGFloat = 20
+        let views: [UIView] = [headerView, middleView, bottomView]
+        
+        views.forEach {
+            view.addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                $0.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+                $0.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            ])
+        }
         
         NSLayoutConstraint.activate([
             headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            headerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            headerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            headerView.heightAnchor.constraint(equalToConstant: headerViewHeight)
+            middleView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: padding),
+            bottomView.topAnchor.constraint(equalTo: middleView.bottomAnchor, constant: padding)
         ])
+        
+        headerView.heightAnchor.constraint(equalToConstant: heightOne).isActive = true
+        middleView.heightAnchor.constraint(equalToConstant: heightTwo).isActive = true
+        bottomView.heightAnchor.constraint(equalToConstant: heightTwo).isActive = true
+        
     }
     
     func add(childVC: UIViewController, to containerView: UIView ) {
